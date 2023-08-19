@@ -1,8 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => setdata(json));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +26,11 @@ function App() {
           Learn React
         </a>
       </header>
+      <section>
+        {data?.map((item) => (
+          <h1>{item.title}</h1>
+        ))}
+      </section>
     </div>
   );
 }
